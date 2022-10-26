@@ -1,0 +1,38 @@
+POST localhost:9000/api/v1/auth/register
+Content-Type: application/json 
+
+{
+"firstName":"Gean",
+"lastName":"Franco v1",
+"email":"geanv1@example.com",
+"password":"root",
+"phone":"+521231231221",
+"birthday":"2003/09/18"
+}
+
+POST localhost:9000/api/v1/auth/login
+Content-Type: application/json
+
+{
+"email":"geanv1@example.com",
+"password":"root"
+}
+
+POST localhost:9000/api/v1/conversations
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OGNjYzBhLTI5OGYtNDJjMC04MzRkLThlMzdkZjFlODgzZCIsImVtYWlsIjoiZ2VhbnYxQGV4YW1wbGUuY29tIiwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY2NjgyMzQzOX0.WYEoqLRjZWAdBFc4EZHKmq9rEJth7LHtaus8gDGmAwk
+Content-Type: application/json 
+
+{
+    "title": "Prueba",
+    "imageUrl": "www.prueba.com"
+}
+
+GET localhost:9000/api/v1/conversations
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0OGNjYzBhLTI5OGYtNDJjMC04MzRkLThlMzdkZjFlODgzZCIsImVtYWlsIjoiZ2VhbnYxQGV4YW1wbGUuY29tIiwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY2NjgyMzQzOX0.WYEoqLRjZWAdBFc4EZHKmq9rEJth7LHtaus8gDGmAwk
+Content-Type: application/json 
+
+GET localhost:9000/api/v1/conversations/2aa21aee-4946-447f-971e-0bd99998e33b
+Content-Type: application/json 
+
+DELETE localhost:9000/api/v1/conversations
+Content-Type: application/json
