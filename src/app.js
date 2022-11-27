@@ -2,9 +2,12 @@ const express = require('express')
 const {port} = require('./config')
 const { Server } = require('socket.io')
 const http = require('http');
+const swaggerUi= require("swagger-ui-express")
+const swaggerJsDoc=require("swagger-jsdoc")
 
 
 const db = require('./database/database')
+const swaggerDoc=require("../swagger.json")
 
 const app = express()
 
@@ -23,6 +26,10 @@ const authRouter = require('./auth/auth.router')
 const initModels = require('./models/init.models')
 const conversationsRouter = require('./conversation/conversation.router')
 
+
+// *Rutas Raiz
+// Ruta para documentacion swagger
+app.use("/api/v1/docs",swaggerUi.serve,swaggerUi.setup(swaggerDoc))
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/auth',authRouter)
 app.use('/api/v1/conversations', conversationsRouter)

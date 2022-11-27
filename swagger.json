@@ -1,0 +1,370 @@
+{
+    "swagger": "2.0",
+    "info": {
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "version": "1.0.0",
+    "title": "recetario sequelize",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+    "email": "cruzmaldonadocharris@gmail.com.com"
+    },
+    "license": {
+    "name": "Apache 2.0",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+    },
+    "host": "https://en proceso.onrender.com",
+    "basePath": "/api/v1",
+    "tags": [
+    {
+    "name": "auth",
+    "description": "path to register and log in users",
+    "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "http://swagger.io"
+    }
+    },
+    {
+    "name": "messages",
+    "description": "all messages from all conversations",
+    "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "http://swagger.io"
+    }
+    },
+    {
+    "name": "participants",
+    "description": "registration of participants of a conversation",
+    "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "http://swagger.io"
+    }
+    },
+    {
+    "name": "users",
+    "description": "Operations about users",
+    "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "http://swagger.io"
+    }
+    },
+    {
+    "name": "conversations",
+    "description": "table where groups of conversations are stored",
+    "externalDocs": {
+    "description": "Find out more about our API",
+    "url": "http://swagger.io"
+    }
+    }
+    ],
+    "schemes": [
+    "https"
+    ],
+    "paths": {
+    "/users":{
+    "get":{
+    "tags":["users"],
+    "summary":"get all registered users"
+    }
+    },
+    "/users/me":{
+    "get":{
+    "tags":["users"],
+    "summary":"get information about the logged in user"
+    },
+    "patch":{
+    "tags":["users"],
+    "summary":"Modify information of the logged in user"
+    },
+    "delete":{
+    "tags":["users"],
+    "summary":"delete the logged user"
+    }
+    },
+    "/users/{id}":{
+    "get":{
+    "tags":["users"],
+    "summary":"get user by id"
+    },
+    "patch":{
+    "tags":["users"],
+    "summary":"Modify user information by id, only admin"
+    },
+    "delete":{
+    "tags":["users"],
+    "summary":"delete user information by id, only admin"
+    }
+    },
+    "/auth/register":{
+    "post":{
+    "tags":["auth"],
+    "summary":"register a new user",
+    "description":"",
+    "operationId":"createUser",
+    "consumes":["multipart/form-data"],
+    "produces":["application/json"],
+    "parameters":[
+    {
+    "name":"firstName",
+    "in":"formData",
+    "description":"first username",
+    "required":true,
+    "type":"string"
+    },
+    {
+    "name":"lastName",
+    "in":"formData",
+    "description":"last username",
+    "required":true,
+    "type":"string"
+    },
+    {
+    "name":"email",
+    "in":"formData",
+    "description":"example@example.com",
+    "required":true,
+    "type":"string"
+    },
+    {
+    "name":"password",
+    "in":"formData",
+    "description":"password",
+    "required":true,
+    "type":"string"
+    },
+    {
+    "name":"phone",
+    "in":"formData",
+    "description":"+521231231231",
+    "required":true,
+    "type":"string"},
+    {
+    "name":"birthday",
+    "in":"formData",
+    "description":"YYYY/MM/DD",
+    "required":true,
+    "type":"string"}  
+    ],
+    "responses":{
+    "201":{
+    "description":"user created",
+    "schema":{
+    "$ref":"#/definitions/Users"
+    }
+    },
+    "400":{
+    "description":"{err.mesage} or 'All field must be completed'",
+    "schema":{
+    "$ref":"#/definitions/400CreateUsers"
+    }
+    }
+    },
+    "security":[
+    {
+    }
+    ]
+    }
+    },
+    "/auth/login":{
+    "post":{
+    "tags":["auth"],
+    "summary":"login user"
+    }
+    },
+    "/conversations":{
+    "get":{
+    "tags":["conversations"],
+    "summary":"get all conversations"
+    },
+    "post":{
+    "tags":["conversations"],
+    "summary":"Create a new conversation,for each users"
+    }
+    },
+    "/conversations/{conversations_id}":{
+    "get":{
+    "tags":["conversations"],
+    "summary":"get all conversations by id"
+    },
+    "patch":{
+    "tags":["conversations"],
+    "summary":"Modify conversatios information by id"
+    },
+    "delete":{
+    "tags":["conversations"],
+    "summary":"delete conversation by id"
+    }
+    },
+    "/conversations/{conversations_id}/messages":{
+    "get":{
+    "tags":["conversations"],
+    "summary":"get all messages from a specific conversation"
+    },
+    "post":{
+    "tags":["conversations"],
+    "summary":"create a new message in a specific conversation "
+    }
+    },
+    "/conversations/{conversations_id}/messages/{messages_id}":{
+    "get":{
+    "tags":["conversations"],
+    "summary":"get a messages from a specific conversation"
+    },
+    "delete":{
+    "tags":["conversations"],
+    "summary":"delete a message from a specific conversation by id"
+    }
+    }
+    },
+    "securityDefinitions": {
+    "api_key": {
+    "type": "apiKey",
+    "name": "api_key",
+    "in": "header"
+    },
+    "petstore_auth": {
+    "type": "oauth2",
+    "authorizationUrl": "https://petstore.swagger.io/oauth/authorize",
+    "flow": "implicit",
+    "scopes": {
+    "read:pets": "read your pets",
+    "write:pets": "modify pets in your account"
+    }
+    }
+    },
+    "definitions": {
+    "Users":{
+    "type":"object",
+    "properties":{
+    "id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "firstName":{
+    "type": "string"
+    },
+    "lastName":{
+    "type": "string"
+    },
+    "email":{
+    "type": "string",
+    "format":"email"
+    },
+    "password":{
+    "type": "string",
+    "format":"password"
+    },
+    "status":{
+    "type": "string"
+    },
+    "profile_image":{
+    "type": "string"
+    },
+    "phone":{
+    "type": "string"
+    }
+    },
+    "xml":{
+    "name":"Users"
+    }
+    },
+    "messages":{
+    "type":"object",
+    "properties":{
+    "id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "user_id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "conversation_id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "message":{
+    "type":"string"
+    }
+    },
+    "xml":{
+    "name":"message"
+    }
+    },
+    "participants":{
+    "type":"object",
+    "properties":{
+    "id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "user_id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "conversation_id":{
+    "type":"string",
+    "format":"uuid"
+    }
+    },
+    "xml":{
+    "name":"participants"
+        }
+    },
+    "convesations":{
+    "type":"object",
+    "properties":{
+    "id":{
+    "type":"string",
+    "format":"uuid"
+    },
+    "title":{
+    "type":"string"
+    },
+    "image_url":{
+    "type":"string"
+    },
+    "user_id":{
+    "type":"string",
+    "format":"uuid"
+    }
+    },
+    "xml":{
+    "name":"conversations"
+    }
+    },
+    "400CreateUsers":{
+    "type":"object",
+    "properties":{
+    "firstName":{
+    "type": "string"
+    },
+    "lastName":{
+    "type": "string"
+    },
+    "email":{
+    "type": "string",
+    "format":"email"
+    },
+    "password":{
+    "type": "string",
+    "format":"password"
+    },
+    "phone":{
+    "type": "string"
+    },
+    "birhday":{
+    "type": "string",
+    "default":"YYYY/MM/DD"
+    }
+    },
+    "xml":{
+    "name":"400CreateUsers"
+    }
+    }
+    },
+    "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+    }
+    }
